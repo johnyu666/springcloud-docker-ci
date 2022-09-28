@@ -1,0 +1,23 @@
+server:
+  port: 8000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: order-route
+          uri: lb:http://order-service
+          predicates:
+            ## 对于gateway的8000端口，放行/orderManager/下所有的资源，即http://order-service/orderManager/[资源]
+            - Path=/orderManager/**
+            - After=2022-09-07T12:28:06+08:00[Asia/Shanghai]
+          filters:
+            ## gateway 在放行前，会截去前一个path,只剩下http://order-service/[资源]
+            - StripPrefix=1
+            ## gateway在放行前，会在加入一个前缀/api,即：http://order-service/api/[资源]
+            - PrefixPath=/api

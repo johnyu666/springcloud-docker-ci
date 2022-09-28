@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: config-center
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        native:
+          bootstrap: true
+          search-locations: classpath:/config
+        git:
+          uri: https://github.com/johnyu666/connfig-server.git
+          lable: master
+  rabbitmq:
+    password: guest
+    username: guest
+    port: 5672
+    host: johnyu.cn
+server:
+  port: 1300
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh' # 通过发送一个post空请求到 /bus-refresh，结合客户端的@RefreshScope接收配置变化

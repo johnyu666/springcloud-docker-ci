@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>Ajax</h1>
+<button>fetch 错误情况0</button>
+<button>fetch 超时情况1</button>
+<button>fetch 超时情况2</button>
+<script>
+
+        async function fn(id){
+           return await fetch("payments/"+id).then(resp=>resp.text())
+        }
+
+        let btn1=document.querySelector("button:first-of-type");
+        let btn2=document.querySelector("button:nth-of-type(2)");
+        let btn3=document.querySelector("button:nth-of-type(3)");
+        btn1.addEventListener("click",async function(){
+           let info= await fn(0);
+           console.log(info);
+        });
+        btn2.addEventListener("click",async function(){
+            let info= await fn(1);
+            console.log(info);
+        });
+        btn3.addEventListener("click",async function(){
+            let info= await fn(2);
+            console.log(info);
+        });
+    </script>
+
+</body>
+</html>

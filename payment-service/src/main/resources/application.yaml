@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: payment-service
+server:
+  port: 3000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:1000/eureka,http://eureka2:1100/eureka
+
+---
+spring:
+  profiles: p3001
+server:
+  port: 3001
+---
+spring:
+  profiles: p3002
+server:
+  port: 3002
