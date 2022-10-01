@@ -1,0 +1,6 @@
+POST http://localhost:3359/actuator/refresh
+Content-Type: application/json
+
+{}
+
+###

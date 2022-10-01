@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @SpringBootApplication
-@RefreshScope
+@RefreshScope //保证Config的客户端可以"手动或自动"的接收到配置信息的变化
 public class ConfigClientApp {
     public static void main(String[] args) {
         SpringApplication.run(ConfigClientApp.class,args);

@@ -1,0 +1,5 @@
+### curl http://localhost:8000/orderManager/orders/2 -H "Token: stu123"
+GET http://localhost:8000/orderManager/orders/2
+Token: stu123
+
+### curl http://localhost:8000/orderManager/orders/2 -H "Token: stu123"

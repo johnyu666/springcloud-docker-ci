@@ -9,14 +9,31 @@ spring:
     name: gateway-service
   cloud:
     gateway:
+#      设置跨域访问
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+#      防止微服务间调用产生重复的响应头
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_UNIQUE
       routes:
+#        在此可以设定多个路由条目，需要保证id唯一
         - id: order-route
-          uri: lb:http://order-service
-          predicates:
-            ## 对于gateway的8000端口，放行/orderManager/下所有的资源，即http://order-service/orderManager/[资源]
+          uri: lb:http://order-service #负载均衡方式调用order-service服务
+          predicates: #设定在本服务（gateway-service)中放行的条件断言(白名单机制）
+            ## 路径断言：对于gateway的8000端口，放行/orderManager/下所有的资源
+            # 即放行http://gateway-service/orderManager/[资源]，但会根据uri设定
+            # 使用order-service 替换掉 gateway-service
             - Path=/orderManager/**
-            - After=2022-09-07T12:28:06+08:00[Asia/Shanghai]
+            # 时间断言：放行的时间要求为：xxx 之后
+            - After=2022-09-29T13:45:06+08:00[Asia/Shanghai]
+            # 请求头断言：必须包含Token请求头，且形式为：stu[数字]
+#            - Header=Token,stu\d+
           filters:
+#            - AddRequestHeader=X-Request-Foo, Bar
             ## gateway 在放行前，会截去前一个path,只剩下http://order-service/[资源]
             - StripPrefix=1
             ## gateway在放行前，会在加入一个前缀/api,即：http://order-service/api/[资源]

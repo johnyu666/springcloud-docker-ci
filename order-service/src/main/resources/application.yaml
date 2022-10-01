@@ -9,17 +9,24 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
+    registry-fetch-interval-seconds: 5 # 客户端每5秒（默认30秒）向服务端刷新一次缓存
+
+
+
 feign:
   # open feign的超时处理,相当于设置Ribbon的超时策略，因为与Hystrix的线程机制有冲突，所以不能与降级策略同时使用
   client:
     config:
       payment-service:
-        connectTimeout: 3000
-        readTimeout: 3000
-#payment-service:
-#  ribbon:
+#        1秒是默认值，超时会在Feign的代理Service中抛出异常
+        connectTimeout: 1000
+        readTimeout: 1000
+
+payment-service:
+  ribbon:
+    ServerListRefreshInterval: 2000 # ribbon的调用缓存时间，每2秒刷新一次
 #    负载均衡策略
-#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #配置规则 随机
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #配置规则 随机
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule #配置规则 轮询
     #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RetryRule #配置规则 重试
     #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule #配置规则 响应时间权重

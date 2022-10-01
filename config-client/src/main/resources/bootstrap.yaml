@@ -1,5 +1,5 @@
 server:
-  port: 3500
+  port: 3500 # 此配置将会从配置中心获取
 spring:
   application:
     name: config-client
@@ -7,18 +7,25 @@ spring:
     config:
       discovery:
         enabled: true
-        service-id: config-center
-      name: config
-      profile: dev
-      label: master
+        service-id: config-center #指定配置中心
+      name: config #指定文件名称
+      profile: dev #指定配置侧面（profile)
+      label: master #指定git分支
   rabbitmq: #用于订阅配置信息的变化；与@RefreshScope配合使用
     password: guest
     username: guest
     port: 5672
-    host: johnyu.cn
+    host: localhost
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
 
+# 将服务中的Actuator的"端点（endpoint)"暴露出来，可进行"手动刷新"配置，可以使用以下方法：
+# curl -X POST "http://localhost:port/actuator/refresh"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"   # * 在yaml 文件属于关键字，所以需要加引号，此处代表所有端点

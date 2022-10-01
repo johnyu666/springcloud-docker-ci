@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient(name = "payment-service")
 public interface OrderService {
 
+//    当id=1时，会因payment-service的超时（在feign中认定为1秒），
+//    而导致异常的抛出，此异常最终会在controller中被自定义的Handler处理
     @RequestMapping(value = "/payments/{id}")
     String loadPayment(@PathVariable(value = "id") int id);
 

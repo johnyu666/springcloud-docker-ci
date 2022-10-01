@@ -2,28 +2,36 @@ spring:
   application:
     name: config-center
   profiles:
-    active: git
+    active: git #指定 cloud.config.server.git
   cloud:
     config:
       server:
         native:
           bootstrap: true
           search-locations: classpath:/config
+#       本服务启动后，会从github上拉取配置文件，如github master分支上的config-dev.yaml，会以如下方式对外发布：
+#       http://localhost:1300/config/dev/master
+#       这样所有的客户端就可以通过此地址访问到配置信息了。
+#       但如果github信息变动了：会自动的更新发布给client的信息，但client端是不能"默认自动"获取的，只能"手动"刷新
         git:
           uri: https://github.com/johnyu666/connfig-server.git
-          lable: master
+          lable: master #git分支
+
+#  加入此配置，配置中心会向注册到MQ的一个Channel，当我们post 到bus-refresh端点时，会将github上变动的信息发送到此Channel上
+#  此时订阅此Channel的Client就会收到此消息，进而完成"自动的"刷新配置的工作
   rabbitmq:
     password: guest
     username: guest
     port: 5672
-    host: johnyu.cn
+    host: localhost
 server:
   port: 1300
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
-
+# configer-server 会将actuator发布一个 'bus-refresh'的端点，我们需要将其暴露，然后使用以下命令：
+# curl -v -X POST "http://localhost:1300/actuator/bus-refresh"
 management:
   endpoints:
     web:

@@ -5,6 +5,10 @@ server:
   port: 1000
 
 eureka:
+  server:
+    enable-self-preservation: false #自我保护模式,默认打开
+    eviction-interval-timer-in-ms: 20000 #每隔20秒执行一次清理注册（默认为1分钟）
+
   client:
     fetch-registry: true
     register-with-eureka: true
