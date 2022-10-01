@@ -1,5 +1,8 @@
 package cn.johnyu.config.client;
 
+import com.google.errorprone.annotations.RequiredModifiers;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +17,9 @@ public class ConfigClientApp {
     public static void main(String[] args) {
         SpringApplication.run(ConfigClientApp.class,args);
     }
-    @Value("${username}")
-    private String username;
+
+    @Value("${username:JohnYu}")
+    private String username="abc";
 
     @RequestMapping("/users")
     public String findUser(){

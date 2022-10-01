@@ -51,7 +51,7 @@ public class PaymentController {
         }
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         String processInfo=runtimeMXBean.getName();
-        return Thread.currentThread().getName()+ "@"+processInfo+"-"+Math.random();
+        return "Thread:"+Thread.currentThread().getName()+ "@"+processInfo+"-"+Math.random();
     }
     public String loadPaymentFallback(int id){
         return "payment 错误，"+id;

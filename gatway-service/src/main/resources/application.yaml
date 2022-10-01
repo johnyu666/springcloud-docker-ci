@@ -3,7 +3,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
+      defaultZone: http://eureka1:1000/eureka,http://eureka2:1100/eureka
 spring:
   application:
     name: gateway-service

@@ -8,10 +8,8 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
+      defaultZone: http://eureka1:1000/eureka,http://eureka2:1100/eureka
     registry-fetch-interval-seconds: 5 # 客户端每5秒（默认30秒）向服务端刷新一次缓存
-
-
 
 feign:
   # open feign的超时处理,相当于设置Ribbon的超时策略，因为与Hystrix的线程机制有冲突，所以不能与降级策略同时使用

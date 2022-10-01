@@ -1,14 +1,12 @@
 spring:
   application:
     name: payment-service
-server:
-  port: 3000
-
-
+  profiles:
+    active: p3000
 eureka:
   instance:
-    hostname: abc #设定主机名称，必须与下面的prefer-ip-address: false配合生效
-    prefer-ip-address: true
+#    hostname: abc #设定主机名称，必须与下面的prefer-ip-address: false配合生效
+#    prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30 #每8秒（默认30秒）进行向server进行一次续约
     # server在24秒内（默认90秒）未收到续约心跳，则认为本服务处于失效状态，但不会立即删除它..
     # 需要等到server.eviction-interval-timer-in-ms 时间到后开始删除
@@ -16,7 +14,12 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka1:1000/eureka,http://eureka2:1100/eureka
-    registry-fetch-interval-seconds: 5 # 客户端每5秒（默认30秒）向服务端刷新一次缓存
+    registry-fetch-interval-seconds: 30 # 客户端每5秒（默认30秒）向服务端刷新一次缓存
+---
+spring:
+  profiles: p3000
+server:
+  port: 3000
 ---
 spring:
   profiles: p3001

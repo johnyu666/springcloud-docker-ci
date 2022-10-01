@@ -5,18 +5,22 @@ spring:
     name: config-client
   cloud:
     config:
+#      uri 和 discovery 二选一
+#      可以使用一台集群以外的服务器，最终形式：http://host:1300/[name]/[profile]/[label]
+#      uri: http://localhost:1300
+
+#     使用集群内的服务: http://[serviceId]/[name]/[profile]/[label]
       discovery:
         enabled: true
         service-id: config-center #指定配置中心
       name: config #指定文件名称
       profile: dev #指定配置侧面（profile)
       label: master #指定git分支
-  rabbitmq: #用于订阅配置信息的变化；与@RefreshScope配合使用
+  rabbitmq: #用于订阅配置信息的变化
     password: guest
     username: guest
     port: 5672
     host: localhost
-
 eureka:
   client:
     service-url:

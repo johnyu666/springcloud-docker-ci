@@ -14,6 +14,7 @@ spring:
 #       这样所有的客户端就可以通过此地址访问到配置信息了。
 #       但如果github信息变动了：会自动的更新发布给client的信息，但client端是不能"默认自动"获取的，只能"手动"刷新
         git:
+          bootstrap: true
           uri: https://github.com/johnyu666/connfig-server.git
           lable: master #git分支
 
@@ -29,7 +30,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:1000/eureka,http://localhost:1100/eureka
+      defaultZone: http://eureka1:1000/eureka,http://eureka2:1100/eureka
 # configer-server 会将actuator发布一个 'bus-refresh'的端点，我们需要将其暴露，然后使用以下命令：
 # curl -v -X POST "http://localhost:1300/actuator/bus-refresh"
 management:
